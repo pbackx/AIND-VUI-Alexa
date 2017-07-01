@@ -13,3 +13,18 @@ GetNewFactIntent give me a top game
 GetNewFactIntent tell me a top game
 GetNewFactIntent give me the best game
 GetNewFactIntent tell me something
+GetNewYearFactIntent the best game of {FACT_YEAR}
+GetNewYearFactIntent a game in {FACT_YEAR}
+GetNewYearFactIntent give me the best game of {FACT_YEAR}
+GetNewYearFactIntent the best of {FACT_YEAR}
+GetNewYearFactIntent {FACT_YEAR} game of the year
+GetNewYearFactIntent give me the {FACT_YEAR} game of the year
+GetNewYearFactIntent the top game in {FACT_YEAR}
+GetNewYearFactIntent the top game of {FACT_YEAR}
+GetNewYearFactIntent give me the top game of {FACT_YEAR}
+GetNewYearFactIntent {FACT_YEAR} best game
+GetNewYearFactIntent {FACT_YEAR} top game
+GetNewYearFactIntent tell me about {FACT_YEAR}
+GetNewYearFactIntent suggest the {FACT_YEAR} best game
+GetNewYearFactIntent what game was the best in {FACT_YEAR}
+GetNewYearFactIntent tell me the {FACT_YEAR} game of the year
