@@ -1,4 +1,15 @@
-GetNewFactIntent a fact
-GetNewFactIntent tell me a fact
-GetNewFactIntent give me a fact
+GetNewFactIntent a game
+GetNewFactIntent give me a game
 GetNewFactIntent give me something
+GetNewFactIntent a game suggestion
+GetNewFactIntent a game tip
+GetNewFactIntent the best game
+GetNewFactIntent a good game
+GetNewFactIntent a tip
+GetNewFactIntent the game of the year
+GetNewFactIntent tell me the game of the year
+GetNewFactIntent a top game
+GetNewFactIntent give me a top game
+GetNewFactIntent tell me a top game
+GetNewFactIntent give me the best game
+GetNewFactIntent tell me something
