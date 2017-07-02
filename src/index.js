@@ -19,7 +19,8 @@ var languageStrings = {
             "FACTS": facts.FACTS_EN,
             "SKILL_NAME": "My Game Facts",  // OPTIONAL change this to a more descriptive name
             "GET_FACT_MESSAGE": GET_FACT_MSG_EN[0],
-            "HELP_MESSAGE": "You can say tell me a fact, or, you can say exit... What can I help you with?",
+            "GET_YEAR_FACT_MESSAGE": "You asked about ${year}: ",
+            "HELP_MESSAGE": "You can say tell me a game fact, or, you can say exit... What can I help you with?",
             "HELP_REPROMPT": "What can I help you with?",
             "STOP_MESSAGE": "Goodbye!"
         }
@@ -70,7 +71,14 @@ var handlers = {
         this.emit(':tellWithCard', speechOutput, this.t("SKILL_NAME"), randomFact)
     },
     'GetNewYearFactIntent': function () {
-        //TODO your code here
+        var factArr = this.t('FACTS');
+
+        var year = parseInt(this.event.request.intent.slots.FACT_YEAR.value); //TODO creates problem when no slots defined
+
+        var yearFact = getYearFact(factArr, year);
+//TODO won't work if year is not known
+        var speechOutput = this.t("GET_YEAR_FACT_MESSAGE").replace("${year}", year) + yearFact;
+        this.emit(':tellWithCard', speechOutput, this.t("SKILL_NAME"), yearFact)
     },
     'AMAZON.HelpIntent': function () {
         var speechOutput = this.t("HELP_MESSAGE");
@@ -91,4 +99,15 @@ function randomPhrase(phraseArr) {
     var i = 0;
     i = Math.floor(Math.random() * phraseArr.length);
     return (phraseArr[i]);
-};
+}
+
+function getYearFact(phraseArr, year) {
+    var phrase = phraseArr.find(function(element) {
+        return element.indexOf(year) !== -1;
+    });
+    if (!phrase) {
+        var i = Math.floor(Math.random() * phraseArr.length);
+        phrase = phraseArr[i];
+    }
+    return phrase;
+}
