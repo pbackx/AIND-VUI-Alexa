@@ -20,6 +20,7 @@ var languageStrings = {
             "SKILL_NAME": "My Game Facts",  // OPTIONAL change this to a more descriptive name
             "GET_FACT_MESSAGE": GET_FACT_MSG_EN[0],
             "GET_YEAR_FACT_MESSAGE": "You asked about ${year}: ",
+            "GET_YEAR_UNKNOWN_MESSAGE": "I'm sorry, but I don't know about that year. Here's a random game: ",
             "HELP_MESSAGE": "You can say tell me a game fact, or, you can say exit... What can I help you with?",
             "HELP_REPROMPT": "What can I help you with?",
             "STOP_MESSAGE": "Goodbye!"
@@ -73,12 +74,18 @@ var handlers = {
     'GetNewYearFactIntent': function () {
         var factArr = this.t('FACTS');
 
-        var year = parseInt(this.event.request.intent.slots.FACT_YEAR.value); //TODO creates problem when no slots defined
+        if (this.event.request.intent.slots.FACT_YEAR.value) {
+            var year = parseInt(this.event.request.intent.slots.FACT_YEAR.value);
+            var yearFact = getYearFact(factArr, year);
+            if (yearFact) {
+                var speechOutput = this.t("GET_YEAR_FACT_MESSAGE").replace("${year}", year) + yearFact;
+                this.emit(':tellWithCard', speechOutput, this.t("SKILL_NAME"), yearFact)
+            }
+        }
 
-        var yearFact = getYearFact(factArr, year);
-//TODO won't work if year is not known
-        var speechOutput = this.t("GET_YEAR_FACT_MESSAGE").replace("${year}", year) + yearFact;
-        this.emit(':tellWithCard', speechOutput, this.t("SKILL_NAME"), yearFact)
+        var randomFact = randomPhrase(factArr);
+        var speechOutput = this.t("GET_YEAR_UNKNOWN_MESSAGE") + randomFact;
+        this.emit(':tellWithCard', speechOutput, this.t("SKILL_NAME"), randomFact)
     },
     'AMAZON.HelpIntent': function () {
         var speechOutput = this.t("HELP_MESSAGE");
@@ -102,12 +109,7 @@ function randomPhrase(phraseArr) {
 }
 
 function getYearFact(phraseArr, year) {
-    var phrase = phraseArr.find(function(element) {
+    return phraseArr.find(function(element) {
         return element.indexOf(year) !== -1;
     });
-    if (!phrase) {
-        var i = Math.floor(Math.random() * phraseArr.length);
-        phrase = phraseArr[i];
-    }
-    return phrase;
 }
